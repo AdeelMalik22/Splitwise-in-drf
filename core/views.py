@@ -22,6 +22,12 @@ class GroupViewSet(viewsets.ModelViewSet):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
 
+    @action(detail=True, methods=['delete'],url_name='delete')
+    def delete_group(self,request,pk=None):
+        delete_group = Group.objects.get(pk=pk)
+        if delete_group:
+            delete_group.delete()
+        return Response({"detail": "Group and its associate records have been deleted."},status=status.HTTP_204_NO_CONTENT)
 
 
 class UserGroupViewSet(viewsets.ModelViewSet):
